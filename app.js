@@ -24,6 +24,9 @@ app.set('view engine', 'ejs');
 //set public folder
 app.use(express.static(path.join(__dirname,'public')));
 
+//Set global errors variable
+app.locals.errors = null;
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 

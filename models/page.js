@@ -15,7 +15,7 @@ var PageSchema = mongoose.Schema({
         required: true
     },
     sorting: {
-        type: number,
+        type: Number,
     }
 });
 
