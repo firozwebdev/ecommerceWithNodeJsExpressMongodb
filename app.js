@@ -70,8 +70,10 @@ app.use(function (req, res, next) {
 //set routes
 var pages = require('./routes/pages.js');
 var adminpages = require('./routes/adminpages.js');
+var adminCategories = require('./routes/admin_categories.js');
 
 app.use('/admin/pages',adminpages);
+app.use('/admin/categories',adminCategories);
 app.use('/',pages);
 
 //start server
