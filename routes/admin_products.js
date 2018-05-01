@@ -6,16 +6,21 @@ var resizeImg = require('resize-img');
 
 //Get Product model
 var Product = require('../models/product');
+var Category = require('../models/category');
 
-// Get pages index
+// Get products index
 router.get('/',function(req, res){
-    Page.find({}).sort({sorting: 1}).exec(function(err, pages){
-        res.render('admin/pages',{
-            title: 'Pages',
-            pages: pages
-        });
-    });
-   
+   var count;
+   Product.count(function(err,c){
+       count = c;
+   });
+   Product.find(function(err,products){
+       res.render('admin/products',{
+           title: 'Products',
+           products: products,
+           count:count
+       });
+   });
 });
 
 //Get add page
