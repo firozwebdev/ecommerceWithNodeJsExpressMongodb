@@ -9,3 +9,7 @@
 #imgPreview{
     margin: 20px;
 }
+#noImage, #withImage{
+    width: 100px;
+    height:100px;
+}
