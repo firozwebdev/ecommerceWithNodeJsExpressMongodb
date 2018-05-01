@@ -23,17 +23,21 @@ router.get('/',function(req, res){
    });
 });
 
-//Get add page
-router.get('/add-page',function(req, res){
+//Get add product
+router.get('/add-product',function(req, res){
    var title = "";
-   var slug = "";
-   var content = "";
+   var description = "";
+   var price = "";
 
-   res.render('admin/add_page',{
-       title: title,
-       slug: slug,
-       content: content,
+   Category.find(function(err, categories){
+        res.render('admin/add_product',{
+            title: title,
+            description: description,
+            categories: categories,
+            price: price,
+        });
    });
+  
 });
 
 //Post add page
