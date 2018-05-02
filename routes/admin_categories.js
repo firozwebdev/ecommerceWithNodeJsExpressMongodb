@@ -60,9 +60,7 @@ router.post('/add-category', function (req, res) {
                     slug: slug,
                 });
                 category.save(function(err){
-                    if(err){
-                        return console.log(err);
-                    }
+                    if(err) return console.log(err);
                     req.flash('success','Category added');
                     res.redirect('/admin/categories');
                 });
