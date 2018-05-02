@@ -64,7 +64,10 @@
 
     <br><br>
     <form action="/admin/products/product-gallery/<%=id %>" method="post" enctype="multipart/form-data" id="dropzoneForm" class="dropzone">
-    
+        <div class="fallback">
+            <input type="file" name="file" id="" multiple>
+            <input type="submit" value="Upload">
+        </div>
     </form>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.css">
@@ -86,7 +89,8 @@
 
         //Dropzone
         Dropzone.options.dropzoneForm = {
-            acceptedFiles: "images/*",
+           
+            acceptedFiles: "image/*",
             init: function(){
                 this.on("queuecomplete",function(file){
                     setTimeout(function(){

@@ -232,6 +232,22 @@ router.get('/edit-product/:id',function(req, res){
  
 });
 
+// Post product gallery
+router.post('/product-gallery/:id',function(req, res){
+   var productImage = req.files.file;
+   var id = req.params.id;
+   var path = 'public/product_images/'+ id +'/gallery/'+ req.files.file.name;
+   var thumbsPath = 'public/product_images/'+ id +'/gallery/thumbs/'+ req.files.file.name;
+
+   productImage.mv(path, function(err){
+       if(err) console.log(err);
+       resizeImg(fs.readFileSync(path),{width:100,height:100}).then(function(buf){
+           fs.writeFileSync(thumbsPath,buf);
+       });
+   });
+    
+ });
+
 // Get delete page
 router.get('/delete-page/:id',function(req, res){
    Page.findByIdAndRemove(req.params.id,function(err){
