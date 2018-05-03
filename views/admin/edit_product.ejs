@@ -92,7 +92,7 @@
            
             acceptedFiles: "image/*",
             init: function(){
-                this.on("queuecomplete",function(file){
+                this.on("thumbnail",function(file){
                     setTimeout(function(){
                         location.reload();
                     },1000);

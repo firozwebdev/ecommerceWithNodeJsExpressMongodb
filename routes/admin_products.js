@@ -248,6 +248,28 @@ router.post('/product-gallery/:id',function(req, res){
     
  });
 
+// Get delete image from gallery
+router.get('/delete-image/:image',function(req, res){
+    var originalPath = 'public/product_images/'+ req.query.id +'/gallery/'+ req.params.image;
+    var thumbsPath = 'public/product_images/'+ req.query.id +'/gallery/thumbs/'+ req.params.image;
+
+    fs.remove(originalPath,function(err){
+        if(err) {
+            console.log(err);
+        }else{
+            fs.remove(thumbsPath,function(err){
+                if(err){
+                    console.log(err);
+                }else{
+                    req.flash('success','Image Deleted');
+                    res.redirect('/admin/products/edit-product/'+ req.query.id);
+                }
+            });
+        }
+    });
+    
+});
+
 // Get delete page
 router.get('/delete-page/:id',function(req, res){
    Page.findByIdAndRemove(req.params.id,function(err){
