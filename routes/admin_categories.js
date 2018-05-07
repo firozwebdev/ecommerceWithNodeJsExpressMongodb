@@ -61,6 +61,13 @@ router.post('/add-category', function (req, res) {
                 });
                 category.save(function(err){
                     if(err) return console.log(err);
+                    Category.find(function(err, categories){
+                        if(err) {
+                            console.log(err)
+                        }else{
+                            req.app.locals.categories = categories;
+                        }
+                    });
                     req.flash('success','Category added');
                     res.redirect('/admin/categories');
                 });
@@ -121,6 +128,13 @@ router.get('/edit-category/:id',function(req, res){
                     category.slug = slug;
                     category.save(function(err){
                         if(err) return console.log(err);
+                        Category.find(function(err, categories){
+                            if(err) {
+                                console.log(err)
+                            }else{
+                                req.app.locals.categories = categories;
+                            }
+                        });
                         req.flash('success','Category Edited');
                         res.redirect('/admin/categories/edit-category/'+ id);
                     });
@@ -137,6 +151,13 @@ router.get('/edit-category/:id',function(req, res){
 router.get('/delete-category/:id',function(req, res){
    Category.findByIdAndRemove(req.params.id,function(err){
        if(err) return console.log(err);
+       Category.find(function(err, categories){
+        if(err) {
+            console.log(err)
+        }else{
+            req.app.locals.categories = categories;
+        }
+    });
        req.flash('success','Category Deleted');
        res.redirect('/admin/categories/');
    });

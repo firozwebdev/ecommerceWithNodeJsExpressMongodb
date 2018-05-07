@@ -40,6 +40,16 @@ Page.find({}).sort({sorting: 1}).exec(function(err, pages){
     }
 });
 
+//Get category model
+var Category = require('./models/category');
+Category.find(function(err, categories){
+    if(err) {
+        console.log(err)
+    }else{
+        app.locals.categories = categories;
+    }
+});
+
 // Express fileUpload middleware
 app.use(fileUpload());
 
