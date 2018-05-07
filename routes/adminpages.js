@@ -70,6 +70,13 @@ router.post('/add-page', function (req, res) {
                     if(err){
                         return console.log(err);
                     }
+                    Page.find({}).sort({sorting: 1}).exec(function(err, pages){
+                        if(err) {
+                            console.log(err)
+                        }else{
+                            req.app.locals.pages = pages;
+                        }
+                    });
                     req.flash('success','Page added');
                     res.redirect('/admin/pages');
                 });
@@ -80,11 +87,8 @@ router.post('/add-page', function (req, res) {
  
 });
 
-// Get reorder pages
-router.post('/reorder-pages',function(req, res){
-
-
-    var ids = req.body['id[]'];
+//Sort pages function
+function sortPages(ids, callback){
     var count = 0;
     for(var i=0;i < ids.length; i++){
         var id = ids[i];
@@ -94,10 +98,30 @@ router.post('/reorder-pages',function(req, res){
                 page.sorting = count;
                 page.save(function(err){
                     if(err) return console.log(err);
+                    ++count;
+                    if(count>= ids.length){
+                        callback();
+                    }
                 });
             });
         })(count);
     }
+}
+
+// Post reorder pages
+router.post('/reorder-pages',function(req, res){
+
+
+    var ids = req.body['id[]'];
+    sortPages(ids,function(){
+        Page.find({}).sort({sorting: 1}).exec(function(err, pages){
+            if(err) {
+                console.log(err)
+            }else{
+                req.app.locals.pages = pages;
+            }
+        });
+    });
    
 });
 
@@ -161,6 +185,13 @@ router.get('/edit-page/:id',function(req, res){
                         if(err){
                             return console.log(err);
                         }
+                        Page.find({}).sort({sorting: 1}).exec(function(err, pages){
+                            if(err) {
+                                console.log(err)
+                            }else{
+                                req.app.locals.pages = pages;
+                            }
+                        });
                         req.flash('success','Page Updated');
                         res.redirect('/admin/pages/edit-page/'+ id);
                     });
@@ -177,6 +208,13 @@ router.get('/edit-page/:id',function(req, res){
 router.get('/delete-page/:id',function(req, res){
    Page.findByIdAndRemove(req.params.id,function(err){
        if(err) return console.log(err);
+       Page.find({}).sort({sorting: 1}).exec(function(err, pages){
+            if(err) {
+                console.log(err)
+            }else{
+                req.app.locals.pages = pages;
+            }
+        });
        req.flash('success','Page Deleted');
        res.redirect('/admin/pages/');
    });
