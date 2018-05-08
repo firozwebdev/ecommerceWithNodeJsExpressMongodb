@@ -3,6 +3,7 @@ var router = express.Router();
 
 
 //Load models
+Category = require('../models/category');
 Product = require('../models/product');
 
 //Get Index page
@@ -18,22 +19,22 @@ router.get('/',function(req, res){
     });
 });
 
-//get a page
-router.get('/:slug',function(req,res){
-    var slug = req.params.slug;
-    Page.findOne({slug: slug}, function(err,page){
-        if(err) console.log(err);
-        if(!page){
-            res.redirect('/');
-        }else{
-            res.render('index',{
-                title: page.title,
-                content: page.content
+//get products by category
+router.get('/:category',function(req,res){
+    var categorySlug = req.params.category;
+    Category.findOne({slug: categorySlug}, function(err,category){
+
+        Product.find({category: categorySlug},function(err,products){
+            if(err) console.log(err);
+            res.render('category_products',{
+                title: category.title,
+                products: products
             });
-        }
+        });
     });
-    
+   
 });
+
 
 //Exports
 module.exports = router;
