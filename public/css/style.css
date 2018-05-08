@@ -1,4 +1,4 @@
-img.pimage{
+img.pimage, .product-detail-image{
     width: 150px;
 }
 a.pa{
@@ -7,4 +7,10 @@ a.pa{
 }
 .product-item{
     margin: 20px 0;
+}
+
+ul.gallery li{
+    display:inline-block;
+    margin:20px;
+    list-style:none;
 }
